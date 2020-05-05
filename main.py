@@ -1,5 +1,6 @@
 from rich.console import Console
 from rich.table import Column, Table
+from rich.progress import Progress
 import csv
 
 
@@ -12,6 +13,13 @@ def format_status(status):
         return f"[bold red]{status}[/bold red]"
     else:
         return status
+
+def get_progress_string(start_progress:int,end_progress:int):
+    # completed = "[bold red]▇[/bold red]"*start_progress
+    # not_completed = "[bold white]▇[/bold white]"*end_progress
+    completed = "[bold red]▃[/bold red]"*start_progress
+    not_completed = "[bold white]▃[/bold white]"*end_progress
+    return f"{completed}{not_completed}"
 
 def print_table(csv_reader):
 
@@ -31,10 +39,12 @@ def print_table(csv_reader):
             table.add_column(row[0], style="dim", width=12)
             table.add_column(row[1])
             table.add_column(row[2])
+            table.add_column(row[3])
 
         else:
 
-            table.add_row(row[0], row[1], format_status(row[2]))
+            progress = row[3].split('/')
+            table.add_row(row[0], row[1], format_status(row[2]), get_progress_string(int(progress[0]),int(progress[1])))
 
         line_count += 1
 
