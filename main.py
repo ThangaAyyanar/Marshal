@@ -17,8 +17,9 @@ def format_status(status):
 def get_progress_string(start_progress:int,end_progress:int):
     # completed = "[bold red]▇[/bold red]"*start_progress
     # not_completed = "[bold white]▇[/bold white]"*end_progress
-    completed = "[bold red]▃[/bold red]"*start_progress
-    not_completed = "[bold white]▃[/bold white]"*end_progress
+    new_started = int((start_progress/end_progress)*10)
+    completed = "[bold red]▃[/bold red]"*new_started
+    not_completed = "[bold white]▃[/bold white]"*(10-new_started)
     return f"{completed}{not_completed}"
 
 def print_table(csv_reader):
